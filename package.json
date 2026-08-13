@@ -1,0 +1,9 @@
+{
+  "name": "fextoo",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "axios": "^1.7.9",
+    "express": "^4.21.2"
+  }
+}
