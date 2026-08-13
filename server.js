@@ -167,7 +167,4 @@ app.post("/api/callback", (req, res) => {
     ResultDesc: "Accepted"
   });
 });
-
-app.listen(PORT, () => {
-  console.log(`Fextoo server running on port ${PORT}`);
-});
+module.exports = app;
