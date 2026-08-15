@@ -167,4 +167,7 @@ app.post("/api/callback", (req, res) => {
     ResultDesc: "Accepted"
   });
 });
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/index.html");
+});
 module.exports = app;
