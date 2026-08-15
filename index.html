@@ -193,7 +193,220 @@ function joinFextoo(event){
     return;
   }
 
-  alert("Welcome to Fextoo 💘 Registration successful!");
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fextoo 💘</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:linear-gradient(135deg,#ff4b6e,#7b2ff7);
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
+
+.card{
+  width:100%;
+  max-width:430px;
+  background:white;
+  border-radius:25px;
+  padding:30px 25px;
+  box-shadow:0 15px 40px rgba(0,0,0,.25);
+}
+
+.logo{
+  text-align:center;
+  font-size:38px;
+  font-weight:bold;
+  color:#ff416c;
+}
+
+.tagline{
+  text-align:center;
+  color:#777;
+  margin-bottom:25px;
+}
+
+h2{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+input,select{
+  width:100%;
+  box-sizing:border-box;
+  padding:14px;
+  margin:8px 0 14px;
+  border:1px solid #ddd;
+  border-radius:12px;
+  font-size:16px;
+}
+
+button{
+  width:100%;
+  padding:15px;
+  border:0;
+  border-radius:12px;
+  background:#ff416c;
+  color:white;
+  font-size:18px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button:disabled{
+  opacity:.6;
+}
+
+.small{
+  text-align:center;
+  color:#888;
+  font-size:13px;
+  margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+  <div class="logo">Fextoo 💘</div>
+
+  <p class="tagline">
+    Meet someone special. Build a real connection.
+  </p>
+
+  <h2>Create Your Account</h2>
+
+  <form id="fextooForm">
+
+    <input
+      type="text"
+      id="name"
+      placeholder="Full name"
+      required
+    >
+
+    <input
+      type="number"
+      id="age"
+      placeholder="Age (18+)"
+      min="18"
+      required
+    >
+
+    <select id="gender" required>
+      <option value="">Your gender</option>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+      <option value="Other">Other</option>
+    </select>
+
+    <select id="interest" required>
+      <option value="">What are you looking for?</option>
+      <option value="Love">Love ❤️</option>
+      <option value="Dating">Dating 💕</option>
+      <option value="Friendship">Friendship 🤝</option>
+      <option value="Marriage">Marriage 💍</option>
+    </select>
+
+    <input
+      type="tel"
+      id="phone"
+      placeholder="Phone number e.g. 0712345678"
+      required
+    >
+
+    <button type="submit" id="joinButton">
+      Join Fextoo 💘
+    </button>
+
+  </form>
+
+  <p class="small">
+    Fextoo is for adults aged 18 and above.
+  </p>
+
+</div>
+
+<script>
+document.getElementById("fextooForm").addEventListener("submit", async function(event){
+
+  event.preventDefault();
+
+  const button = document.getElementById("joinButton");
+
+  const name = document.getElementById("name").value.trim();
+  const age = Number(document.getElementById("age").value);
+  const phone = document.getElementById("phone").value.trim();
+
+  if(age < 18){
+    alert("You must be 18 or older to join Fextoo.");
+    return;
+  }
+
+  button.disabled = true;
+  button.textContent = "Starting M-PESA...";
+
+  try {
+
+    const response = await fetch("/api/pay", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        name: name,
+        phone: phone
+      })
+    });
+
+    const data = await response.json();
+
+    if(data.success){
+
+      alert(
+        "M-PESA payment request sent 💚\n\n" +
+        "Check your phone and enter your M-PESA PIN."
+      );
+
+    }else{
+
+      alert(
+        data.message ||
+        "Unable to start M-PESA payment."
+      );
+
+    }
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      "Fextoo could not connect to the M-PESA server."
+    );
+
+  }finally{
+
+    button.disabled = false;
+    button.textContent = "Join Fextoo 💘";
+
+  }
+
+});
+</script>
+
+</body>
+      </html>
 
   event.target.reset();
 }
